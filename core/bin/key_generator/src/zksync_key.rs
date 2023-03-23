@@ -187,6 +187,7 @@ fn generate_verification_key<C: Circuit<Engine> + Clone, P: AsRef<Path>>(
         path.display()
     );
     {
+        println!("create file at verification key path {}",path.display());
         File::create(path).expect("can't create file at verification key path");
         remove_file(path).unwrap_or_default()
     }
@@ -208,7 +209,7 @@ fn generate_verification_key<C: Circuit<Engine> + Clone, P: AsRef<Path>>(
         gates_count,
         size_log2
     );
-
+    println!("size_log2 {}",size_log2);
     let key_monomial_form =
         get_universal_setup_monomial_form(size_log2).expect("Failed to read setup file.");
 

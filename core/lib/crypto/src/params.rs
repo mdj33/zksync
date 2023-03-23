@@ -10,9 +10,9 @@ use crate::{
 };
 
 /// Depth of the account tree.
-pub const ACCOUNT_TREE_DEPTH: usize = 32;
+pub const ACCOUNT_TREE_DEPTH: usize = 8;
 /// Depth of the balance tree for each account.
-pub const BALANCE_TREE_DEPTH: usize = 32;
+pub const BALANCE_TREE_DEPTH: usize = 4;
 /// Version of transactions.
 pub const CURRENT_TX_VERSION: u8 = 1;
 
@@ -38,7 +38,7 @@ pub fn total_tokens() -> usize {
     2usize.pow((balance_tree_depth() - 1) as u32) - 2
 }
 
-pub const PROCESSABLE_TOKENS_DEPTH: u32 = 10;
+pub const PROCESSABLE_TOKENS_DEPTH: u32 = 4;
 /// Number of tokens that are processed by this release
 pub fn number_of_processable_tokens() -> usize {
     let num = 2usize.pow(PROCESSABLE_TOKENS_DEPTH);
@@ -74,7 +74,7 @@ pub const MIN_NFT_TOKEN_ID: u32 = 2u32.pow(16);
 
 /// Depth of the left subtree of the account tree that can be used in the current version of the circuit.
 pub fn used_account_subtree_depth() -> usize {
-    let num = 24; // total accounts = 2.pow(num) ~ 16mil
+    let num = 8; // total accounts = 2.pow(num) ~ 16mil
 
     assert!(num <= account_tree_depth());
 

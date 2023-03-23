@@ -73,10 +73,15 @@ pub fn init() -> VlogGuard {
     let (non_blocking, _logger_guard) = tracing_appender::non_blocking(std::io::stdout());
     match log_format.as_str() {
         "plain" => {
-            tracing_subscriber::fmt::Subscriber::builder()
-                .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
-                .with_writer(non_blocking)
+            use tracing_subscriber::fmt;
+            use tracing::Level;
+            fmt()
+                .with_max_level(Level::TRACE)
                 .init();
+            // tracing_subscriber::fmt::Subscriber::builder()
+            //     .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
+            //     .with_writer(non_blocking)
+            //     .init();
         }
         "json" => {
             let timer = tracing_subscriber::fmt::time::ChronoUtc::rfc3339();

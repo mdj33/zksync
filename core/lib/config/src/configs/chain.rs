@@ -5,6 +5,7 @@ use std::time::Duration;
 // Local uses
 use zksync_types::network::Network;
 use zksync_types::Address;
+use std::str::FromStr;
 
 use crate::envy_load;
 
@@ -31,6 +32,37 @@ impl ChainConfig {
             self.state_keeper.max_aggregated_blocks_to_commit,
             self.state_keeper.max_aggregated_blocks_to_execute,
         ) as u32
+    }
+    pub fn init_env() -> Self {
+        Self {
+            circuit: Circuit {
+                key_dir: "/Users/pony/go/src/github.com/matter-labs/zksync/keys/setup/".into(),
+                supported_block_chunks_sizes: vec![6, 30],
+                supported_block_chunks_sizes_setup_powers: vec![21, 22],
+                supported_aggregated_proof_sizes: vec![1, 5],
+                supported_aggregated_proof_sizes_setup_power2: vec![22, 24, 25, 26],
+                account_tree_depth: 10,
+                balance_tree_depth: 3,
+            },
+            eth: Eth {
+                network: "localhost".parse().unwrap(),
+            },
+            state_keeper: StateKeeper {
+                block_chunk_sizes: vec![6, 30],
+                miniblock_iteration_interval: 200,
+                miniblock_iterations: 10,
+                fast_block_miniblock_iterations: 5,
+                // fee_account_addr: Address::from_str("34083bbd70d394110487feaa087da875a54624ec"),
+                fee_account_addr: Address::from_str("34083bbd70d394110487feaa087da875a54624ec").unwrap(),
+                aggregated_proof_sizes: vec![1, 5],
+                max_aggregated_blocks_to_commit: 3,
+                max_aggregated_blocks_to_execute: 4,
+                block_commit_deadline: 300,
+                block_prove_deadline: 3_000,
+                block_execute_deadline: 4_000,
+                max_aggregated_tx_gas: 4_000_000,
+            },
+        }
     }
 }
 
